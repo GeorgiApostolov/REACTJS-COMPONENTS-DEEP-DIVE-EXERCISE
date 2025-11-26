@@ -12,6 +12,7 @@ export default function UserList() {
       })
       .catch((err) => alert(err.message));
   }, []);
+
   return (
     <div className="table-wrapper">
       {/* Overlap components  */}
@@ -180,8 +181,6 @@ export default function UserList() {
           ))}
         </tbody>
       </table>
-
-      <button className="btn-add btn">Add new user</button>
     </div>
   );
 }

@@ -5,6 +5,9 @@ import Search from "./components/Search.jsx";
 import UserList from "./components/UserList.jsx";
 
 function App() {
+  const addUserClickHandler = () => {
+    console.log("test");
+  };
   return (
     <div>
       <Header />
@@ -15,6 +18,10 @@ function App() {
 
           {/* Table component */}
           <UserList />
+
+          <button className="btn-add btn" onClick={addUserClickHandler}>
+            Add new user
+          </button>
 
           <Pagination />
         </section>
