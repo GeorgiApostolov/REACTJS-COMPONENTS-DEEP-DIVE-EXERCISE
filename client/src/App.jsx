@@ -20,8 +20,28 @@ function App() {
 
     const formData = new FormData(event.target);
 
-    const userData = Object.fromEntries(formData);
+    const [country, city, street, streetNumber, ...userData] =
+      Object.fromEntries(formData);
+    userData.adress = {
+      country,
+      city,
+      street,
+      streetNumber,
+    };
+
+    userData.createAt = new Date().toISOString();
+    userData.updatedAt = new Date().toISOString();
     console.log(userData);
+
+    fetch("http://localhost:3030/jsonstore/users", {
+      method: "POST",
+      headers: {
+        "content-type": "application/json",
+      },
+      body: JSON.stringify(userData),
+    })
+      .then((res) => res.json())
+      .then((result) => console.log(result));
   };
   return (
     <div>
