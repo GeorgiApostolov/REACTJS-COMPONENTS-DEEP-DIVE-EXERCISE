@@ -1,6 +1,17 @@
+import { useState } from "react";
+import UserDetails from "./UserDetails.jsx";
 import UserItem from "./UserItem.jsx";
 
 export default function UserList({ users }) {
+  const [showUserDetails, setShowUserDetails] = useState(false);
+  const [selectUserId, setSelectUserId] = useState(null);
+  const detailsActionClickHandler = (userId) => {
+    setShowUserDetails(true);
+    setSelectUserId(userId);
+  };
+  const closeModalHandler = () => {
+    setShowUserDetails(false);
+  };
   return (
     <div className="table-wrapper">
       {/* Overlap components  */}
@@ -165,10 +176,17 @@ export default function UserList({ users }) {
         <tbody>
           {/* Table row component */}
           {users.map((user) => (
-            <UserItem key={user._id} {...user} />
+            <UserItem
+              key={user._id}
+              {...user}
+              onDetailsClick={detailsActionClickHandler}
+            />
           ))}
         </tbody>
       </table>
+      {showUserDetails && (
+        <UserDetails userId={selectUserId} onClose={closeModalHandler} />
+      )}
     </div>
   );
 }

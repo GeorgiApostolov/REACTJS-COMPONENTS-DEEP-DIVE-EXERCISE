@@ -20,7 +20,6 @@ function App() {
   }, [forceRefresh]);
 
   const addUserClickHandler = () => {
-    console.log("test");
     setShowCreateUser(true);
   };
   const closeUserModalHandler = () => {
@@ -31,7 +30,7 @@ function App() {
 
     const formData = new FormData(event.target);
 
-    const [country, city, street, streetNumber, ...userData] =
+    const { country, city, street, streetNumber, ...userData } =
       Object.fromEntries(formData);
     userData.adress = {
       country,
@@ -40,9 +39,8 @@ function App() {
       streetNumber,
     };
 
-    userData.createAt = new Date().toISOString();
+    userData.createdAt = new Date().toISOString();
     userData.updatedAt = new Date().toISOString();
-    console.log(userData);
 
     fetch("http://localhost:3030/jsonstore/users", {
       method: "POST",
@@ -51,7 +49,10 @@ function App() {
       },
       body: JSON.stringify(userData),
     })
-      .then(() => setForceRefresh((state) => !state))
+      .then(() => {
+        closeUserModalHandler();
+        setForceRefresh((state) => !state);
+      })
       .catch((err) => alert(err.message));
   };
   return (
