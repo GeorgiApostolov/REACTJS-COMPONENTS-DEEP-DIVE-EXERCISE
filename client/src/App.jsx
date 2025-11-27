@@ -4,13 +4,16 @@ import Header from "./components/Header.jsx";
 import Pagination from "./components/Pagination.jsx";
 import Search from "./components/Search.jsx";
 import UserList from "./components/UserList.jsx";
-import CreateUser from "./components/CreateUser.jsx";
+import CreateUserModal from "./components/CreateUserModal.jsx";
 
 function App() {
   const [showCreateUser, setShowCreateUser] = useState(false);
   const addUserClickHandler = () => {
     console.log("test");
     setShowCreateUser(true);
+  };
+  const closeUserModalHandler = () => {
+    setShowCreateUser(false);
   };
   return (
     <div>
@@ -30,7 +33,7 @@ function App() {
           <Pagination />
         </section>
 
-        {showCreateUser && <CreateUser />}
+        {showCreateUser && <CreateUserModal onClose={closeUserModalHandler} />}
       </main>
 
       <Footer />
