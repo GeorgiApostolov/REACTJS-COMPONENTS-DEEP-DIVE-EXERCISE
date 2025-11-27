@@ -1,16 +1,23 @@
 import { useState } from "react";
 import UserDetails from "./UserDetails.jsx";
 import UserItem from "./UserItem.jsx";
+import UserDeleteModal from "./UserDeleteModal.jsx";
 
-export default function UserList({ users }) {
+export default function UserList({ users, forceRefresh }) {
   const [showUserDetails, setShowUserDetails] = useState(false);
+  const [showUserDelete, setShowUserDelete] = useState(false);
   const [selectUserId, setSelectUserId] = useState(null);
   const detailsActionClickHandler = (userId) => {
     setShowUserDetails(true);
     setSelectUserId(userId);
   };
+  const deleteActionClickHandler = (userId) => {
+    setSelectUserId(userId);
+    setShowUserDelete(true);
+  };
   const closeModalHandler = () => {
     setShowUserDetails(false);
+    setShowUserDelete(false);
   };
   return (
     <div className="table-wrapper">
@@ -180,12 +187,21 @@ export default function UserList({ users }) {
               key={user._id}
               {...user}
               onDetailsClick={detailsActionClickHandler}
+              onDeleteClick={deleteActionClickHandler}
             />
           ))}
         </tbody>
       </table>
       {showUserDetails && (
         <UserDetails userId={selectUserId} onClose={closeModalHandler} />
+      )}
+
+      {showUserDelete && (
+        <UserDeleteModal
+          userId={selectUserId}
+          onClose={closeModalHandler}
+          forceRefresh={forceRefresh}
+        />
       )}
     </div>
   );
